@@ -21,7 +21,7 @@ exports.protect = (req, res, next) => {
     next();
   } catch (err) {
     console.error("Token verification failed:", err);
-    res.clearCookie("token");
+    res.clearCookie("token", { secure: true, sameSite: 'None' });
     if (req.path.startsWith("/api") || req.method === "POST") {
       return res.json({ error: "Not authorized, token failed" });
     }
