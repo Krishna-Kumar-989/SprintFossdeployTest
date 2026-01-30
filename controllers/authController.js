@@ -30,7 +30,8 @@ exports.signup = async (req, res) => {
    
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", 
+      secure: true,
+      sameSite: 'None',
       maxAge: 24 * 60 * 60 * 1000 
     });
 
@@ -57,7 +58,8 @@ exports.login = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
+      sameSite: 'None',
       maxAge: 24 * 60 * 60 * 1000 
     });
 
@@ -66,7 +68,7 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = (req, res) => {
-    res.clearCookie("token");
+    res.clearCookie("token", { secure: true, sameSite: 'None' });
     res.redirect("/");
 };
 
@@ -80,7 +82,7 @@ exports.checkAuth = async (req, res) => {
     
     const user = await User.findById(req.user.id).select("-password");
     if (!user) {
-        res.clearCookie("token");
+        res.clearCookie("token", { secure: true, sameSite: 'None' });
         return res.status(401).json({ authenticated: false });
     }
 
