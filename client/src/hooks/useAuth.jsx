@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
+const BASE_URL = 'https://sprintfossdeploytest.onrender.com';
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
@@ -8,7 +9,7 @@ export function AuthProvider({ children }) {
 
   const checkAuth = async () => {
     try {
-      const res = await fetch('/check');
+      const res = await fetch(`${BASE_URL}/check`, { credentials: 'include' });
       if (res.ok) {
         const data = await res.json();
         if (data.authenticated) {
@@ -32,7 +33,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const logout = async () => {
-    await fetch('/logout');
+    await fetch(`${BASE_URL}/logout`, { credentials: 'include' });
     setUser(null);
     localStorage.removeItem('current_session');
     localStorage.removeItem('user_details');

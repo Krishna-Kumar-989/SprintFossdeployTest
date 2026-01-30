@@ -21,8 +21,13 @@ const limiter = rateLimit({
 
 //app.use(limiter);
 app.use(cors({
-  origin: "*"
+  origin: function(origin, callback) {
+  
+    callback(null, origin || true);
+  },
+  credentials: true
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

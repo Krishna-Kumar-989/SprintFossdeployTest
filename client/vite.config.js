@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-const BACKEND_URL = 'http://localhost:3000'
+const BACKEND_URL = 'https://sprintfossdeploytest.onrender.com/'
 
 // https://vitejs.dev/config/
 export default defineConfig({
